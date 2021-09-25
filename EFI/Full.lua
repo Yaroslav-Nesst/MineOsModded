@@ -269,7 +269,7 @@ while uptime() < deadline do
 
 		if internetAddress then	
 			tableInsert(utilities, 2, menuElement("Восстановление через интернет", function()
-				local handle, data, result, reason = componentProxy(internetAddress).request("https://raw.githubusercontent.com/IgorTimofeev/MineOS/master/Installer/Main.lua"), ""
+				local handle, data, result, reason = componentProxy(internetAddress).request("https://raw.githubusercontent.com/Yaroslav-Nesst/MineOsModded/master/Installer/Main.lua"), ""
 
 				if handle then
 					status(stringsMain, "Скачивание скрипта...")
