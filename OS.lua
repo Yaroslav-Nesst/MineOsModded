@@ -92,7 +92,7 @@ function require(module)
 	end
 end
 
-local GPUProxy = component.proxy(component.list("видюха")())
+local GPUProxy = component.proxy(component.list("gpu")())
 local screenWidth, screenHeight = GPUProxy.getResolution()
 
 -- Displays title and currently required library when booting OS
@@ -125,10 +125,10 @@ GPUProxy.setBackground(0xE1E1E1)
 GPUProxy.fill(1, 1, screenWidth, screenHeight, " ")
 
 -- Loading libraries
-bit32 = bit32 or UIRequire("32бит")
-local paths = UIRequire("Пути")
-local event = UIRequire("Ивенты")
-local filesystem = UIRequire("Файловая система")
+bit32 = bit32 or UIRequire("Bit32")
+local paths = UIRequire("Paths")
+local event = UIRequire("Events")
+local filesystem = UIRequire("Filesystem")
 
 -- Setting main filesystem proxy to what are we booting from
 filesystem.setProxy(bootFilesystemProxy)
@@ -139,20 +139,20 @@ requireExists = function(variant)
 end
 
 -- Loading other libraries
-UIRequire("Компонент")
-UIRequire("Клавиатура")
-UIRequire("Цвет")
-UIRequire("Текст")
-UIRequire("Номер")
-local image = UIRequire("Изображение")
-local screen = UIRequire("Экран")
+UIRequire("Component")
+UIRequire("Keyboard")
+UIRequire("Color")
+UIRequire("Text")
+UIRequire("Number")
+local image = UIRequire("Image")
+local screen = UIRequire("Screen")
 
 -- Setting currently chosen GPU component as screen buffer main one
 screen.setGPUProxy(GPUProxy)
 
-local GUI = UIRequire("Интерфейс")
-local system = UIRequire("Система")
-UIRequire("Сеть")
+local GUI = UIRequire("GUI")
+local system = UIRequire("System")
+UIRequire("Network")
 
 -- Filling package.loaded with default global variables for OpenOS bitches
 package.loaded.bit32 = bit32
