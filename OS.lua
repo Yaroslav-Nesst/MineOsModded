@@ -53,7 +53,7 @@ function require(module)
 	if package.loaded[lowerModule] then
 		return package.loaded[lowerModule]
 	elseif package.loading[lowerModule] then
-		error("recursive require() call found: library \"" .. module .. "\" is trying to require another library that requires it\n" .. debug.traceback())
+		error("recursive require() call found: library \"" .. module .. "\" пытается потребовать несуществующую библиотеку, которая требует\n" .. debug.traceback())
 	else
 		local errors = {}
 
@@ -61,7 +61,7 @@ function require(module)
 			if requireExists(variant) then
 				return variant
 			else
-				table.insert(errors, "  variant \"" .. variant .. "\" not exists")
+				table.insert(errors, "  variant \"" .. variant .. "\" не существует")
 			end
 		end
 
@@ -88,11 +88,11 @@ function require(module)
 			end
 		end
 
-		error("unable to locate library \"" .. module .. "\":\n" .. table.concat(errors, "\n"))
+		error("Невозможно найти библиотеку \"" .. module .. "\":\n" .. table.concat(errors, "\n"))
 	end
 end
 
-local GPUProxy = component.proxy(component.list("gpu")())
+local GPUProxy = component.proxy(component.list("видюха")())
 local screenWidth, screenHeight = GPUProxy.getResolution()
 
 -- Displays title and currently required library when booting OS
@@ -103,7 +103,7 @@ local function UIRequire(module)
 		return math.floor(screenWidth / 2 - width / 2)
 	end
 	
-	local title, width, total = "MineOS", 26, 14
+	local title, width, total = "MineOS модифицированно", 26, 14
 	local x, y, part = centrize(width), math.floor(screenHeight / 2 - 1), math.ceil(width * UIRequireCounter / UIRequireTotal)
 	UIRequireCounter = UIRequireCounter + 1
 	
@@ -125,10 +125,10 @@ GPUProxy.setBackground(0xE1E1E1)
 GPUProxy.fill(1, 1, screenWidth, screenHeight, " ")
 
 -- Loading libraries
-bit32 = bit32 or UIRequire("Bit32")
-local paths = UIRequire("Paths")
-local event = UIRequire("Event")
-local filesystem = UIRequire("Filesystem")
+bit32 = bit32 or UIRequire("32бит")
+local paths = UIRequire("Пути")
+local event = UIRequire("Ивенты")
+local filesystem = UIRequire("Файловая система")
 
 -- Setting main filesystem proxy to what are we booting from
 filesystem.setProxy(bootFilesystemProxy)
@@ -139,20 +139,20 @@ requireExists = function(variant)
 end
 
 -- Loading other libraries
-UIRequire("Component")
-UIRequire("Keyboard")
-UIRequire("Color")
-UIRequire("Text")
-UIRequire("Number")
-local image = UIRequire("Image")
-local screen = UIRequire("Screen")
+UIRequire("Компонент")
+UIRequire("Клавиатура")
+UIRequire("Цвет")
+UIRequire("Текст")
+UIRequire("Номер")
+local image = UIRequire("Изображение")
+local screen = UIRequire("Экран")
 
 -- Setting currently chosen GPU component as screen buffer main one
 screen.setGPUProxy(GPUProxy)
 
-local GUI = UIRequire("GUI")
-local system = UIRequire("System")
-UIRequire("Network")
+local GUI = UIRequire("Интерфейс")
+local system = UIRequire("Система")
+UIRequire("Сеть")
 
 -- Filling package.loaded with default global variables for OpenOS bitches
 package.loaded.bit32 = bit32
