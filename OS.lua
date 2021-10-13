@@ -127,7 +127,7 @@ GPUProxy.fill(1, 1, screenWidth, screenHeight, " ")
 -- Loading libraries
 bit32 = bit32 or UIRequire("Bit32")
 local paths = UIRequire("Paths")
-local event = UIRequire("Events")
+local event = UIRequire("Event")
 local filesystem = UIRequire("Filesystem")
 
 -- Setting main filesystem proxy to what are we booting from
