@@ -191,7 +191,7 @@ while uptime() < deadline do
 	eventData = {pullSignal(deadline - uptime())}
 	if eventData[1] == stringKeyDown and eventData[4] == 56 then
 		local utilities = {
-			menuElement("Disk management", function()
+			menuElement("Управление дисками", function()
 				local restrict, filesystems, filesystemOptions =
 					function(text, limit)
 						if #text < limit then
@@ -212,10 +212,10 @@ while uptime() < deadline do
 					for address in componentList(stringsFilesystem) do
 						local proxy = componentProxy(address)
 						local label, isReadOnly, filesystemOptions =
-							proxy.getLabel() or "Unnamed",
+							proxy.getLabel() or "Безымённый",
 							proxy.isReadOnly(),
 							{
-								menuElement("Set as bootable", function()
+								menuElement("Установить как основной", function()
 									eepromSetData(address)
 									updateFilesystems()
 								end, 1)
@@ -223,12 +223,12 @@ while uptime() < deadline do
 
 						if not isReadOnly then
 							tableInsert(filesystemOptions, menuElement(stringsChangeLabel, function()
-								proxy.setLabel(input(title(2, stringsChangeLabel), "Enter new name: "))
+								proxy.setLabel(input(title(2, stringsChangeLabel), "Установить новое имя: "))
 								updateFilesystems()
 							end, 1))
 
-							tableInsert(filesystemOptions, menuElement("Format", function()
-								status(stringsMain, "Formatting filesystem " .. address)
+							tableInsert(filesystemOptions, menuElement("Форматировать", function()
+								status(stringsMain, "Форматирование фаловой системы " .. address)
 								
 								for _, file in ipairs(proxy.list("/")) do
 									proxy.remove(file)
@@ -257,10 +257,10 @@ while uptime() < deadline do
 				end
 
 				updateFilesystems()
-				menu("Select filesystem", filesystems)
+				menu("Выберите файловую систему", filesystems)
 			end),
 			
-			menuElement("Shutdown", function()
+			menuElement("Вырубить", function()
 				shutdown()
 			end),
 
