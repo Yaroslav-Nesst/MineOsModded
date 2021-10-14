@@ -1,4 +1,4 @@
-English | [中文(简体)](https://github.com/Yaroslav-Nesst/MineOSModded/master/README-zh_ND.md) | [Русский](https://github.com/Yaroslav-Nesst/MineOSModded/master/README-ru_RU.md)
+English | [中文(简体)](https://github.com/Yaroslav-Nesst/MineOSModded/blob/master/README-zh_CN.md) | [Русский](https://github.com/Yaroslav-Nesst/MineOSModded/blob/master/README-ru_RU.md)
 
 ## MineOS Standalone has released!
 
