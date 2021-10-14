@@ -21,7 +21,7 @@ local repositoryURL = "https://raw.githubusercontent.com/Yaroslav-Nesst/MineOsMo
 local installerURL = "Installer/"
 local EFIURL = "EFI/Minified.lua"
 
-local installerPath = "/Установщик MineOS/"
+local installerPath = "/MineOS installer/"
 local installerPicturesPath = installerPath .. "Installer/Pictures/"
 local OSPath = "/"
 
