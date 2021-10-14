@@ -1,7 +1,7 @@
 
 -- Checking for required components
 local function getComponentAddress(name)
-	return component.list(name)() or error("Required " .. name .. " component is missing")
+	return component.list(name)() or error("Required " .. name .. " компонент не найден")
 end
 
 local function getComponentProxy(name)
@@ -21,7 +21,7 @@ local repositoryURL = "https://raw.githubusercontent.com/Yaroslav-Nesst/MineOsMo
 local installerURL = "Installer/"
 local EFIURL = "EFI/Minified.lua"
 
-local installerPath = "/MineOS installer/"
+local installerPath = "/Установщик MineOS/"
 local installerPicturesPath = installerPath .. "Installer/Pictures/"
 local OSPath = "/"
 
@@ -102,7 +102,7 @@ local function rawRequest(url, chunkHandler)
 
 		internetHandle.close()
 	else
-		error("Connection failed: " .. url)
+		error("Ошибка подключения: " .. url)
 	end
 end
 
@@ -127,7 +127,7 @@ local function download(url, path)
 
 		selectedFilesystemProxy.close(fileHandle)
 	else
-		error("File opening failed: " .. tostring(reason))
+		error("Ошибка открытия фалйла: " .. tostring(reason))
 	end
 end
 
@@ -236,14 +236,14 @@ window:addChild(GUI.panel(1, 1, window.width, window.height, 0xE1E1E1))
 -- Top menu
 local menu = workspace:addChild(GUI.menu(1, 1, workspace.width, 0xF0F0F0, 0x787878, 0x3366CC, 0xE1E1E1))
 local installerMenu = menu:addContextMenuItem("MineOS", 0x2D2D2D)
-installerMenu:addItem("Shutdown").onTouch = function()
+installerMenu:addItem("Вырубить").onTouch = function()
 	computer.shutdown()
 end
-installerMenu:addItem("Reboot").onTouch = function()
+installerMenu:addItem("Ребут ту фастбут").onTouch = function()
 	computer.shutdown(true)
 end
 installerMenu:addSeparator()
-installerMenu:addItem("Exit").onTouch = function()
+installerMenu:addItem("Лиынуть с пользователя").onTouch = function()
 	workspace:stop()
 end
 
@@ -570,12 +570,12 @@ addStage(function()
 	workspace:draw()
 	
 	EEPROMProxy.set(request(EFIURL))
-	EEPROMProxy.setLabel("MineOS EFI")
+	EEPROMProxy.setLabel("Phoenix Bios")
 	EEPROMProxy.setData(selectedFilesystemProxy.address)
 
 	-- Downloading files
 	layout:removeChildren()
-	addImage(3, 2, "Downloading")
+	addImage(3, 2, "Скачивание")
 
 	local container = layout:addChild(GUI.container(1, 1, layout.width - 20, 2))
 	local progressBar = container:addChild(GUI.progressBar(1, 1, container.width, 0x66B6FF, 0xD2D2D2, 0xA5A5A5, 0, true, false))
@@ -619,11 +619,11 @@ addStage(function()
 		end
 	end
 
-	addToList(true, "required")
-	addToList(true, "localizations")
-	addToList(applicationsSwitchAndLabel.switch.state, "optional")
-	addToList(wallpapersSwitchAndLabel.switch.state, "wallpapers")
-	addToList(screensaversSwitchAndLabel.switch.state, "screensavers")
+	addToList(true, "Обязательное")
+	addToList(true, "Локализации")
+	addToList(applicationsSwitchAndLabel.switch.state, "Опции")
+	addToList(wallpapersSwitchAndLabel.switch.state, "Обои")
+	addToList(screensaversSwitchAndLabel.switch.state, "Экран пизды блять ебаной,я не ебу как это назвать")
 
 	-- Downloading files from created list
 	local versions, path, id, version, shortcut = {}
