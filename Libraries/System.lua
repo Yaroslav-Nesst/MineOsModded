@@ -120,11 +120,11 @@ function system.getDefaultUserSettings()
 		
 		tasks = {},
 		dockShortcuts = {
-			filesystem.path(paths.system.applicationAppMarket),
+			filesystem.path(paths.system.applicationМагазин),
 			filesystem.path(paths.system.applicationMineCodeIDE),
 			filesystem.path(paths.system.applicationFinder),
 			filesystem.path(paths.system.applicationPictureEdit),
-			filesystem.path(paths.system.applicationSettings),
+			filesystem.path(paths.system.applicationНастройки),
 		},
 		extensions = {
 			[".lua"] = filesystem.path(paths.system.applicationMineCodeIDE),
