@@ -1,7 +1,7 @@
 
 -- Checking for required components
 local function getComponentAddress(name)
-	return component.list(name)() or error("Required " .. name .. " component is missing")
+	return component.list(name)() or error("Required " .. name .. " компонент не поключен")
 end
 
 local function getComponentProxy(name)
@@ -17,7 +17,7 @@ local EEPROMProxy, internetProxy, GPUProxy =
 GPUProxy.bind(getComponentAddress("screen"))
 local screenWidth, screenHeight = GPUProxy.getResolution()
 
-local repositoryURL = "https://raw.githubusercontent.com/Yaroslav-Nesst/MineOSModded/master/"
+local repositoryURL = "https://raw.githubusercontent.com/Yaroslav-Nesst/MineOS/master/"
 local installerURL = "Installer/"
 local EFIURL = "EFI/Minified.lua"
 
@@ -42,7 +42,7 @@ end
 
 local function title()
 	local y = math.floor(screenHeight / 2 - 1)
-	centrizedText(y, 0x2D2D2D, "MineOS modded")
+	centrizedText(y, 0x2D2D2D, "MineOЭС")
 
 	return y + 2
 end
@@ -155,7 +155,7 @@ end
 
 -- If there's no suitable HDDs found - then meow
 if not temporaryFilesystemProxy then
-	status("No appropriate filesystem found", true)
+	status("Не найдена подходящая файловая система", true)
 	return
 end
 
@@ -176,7 +176,7 @@ function require(module)
 	if package.loaded[module] then
 		return package.loaded[module]
 	elseif package.loading[module] then
-		error("already loading " .. module .. ": " .. debug.traceback())
+		error("уже загружается " .. module .. ": " .. debug.traceback())
 	else
 		package.loading[module] = true
 
@@ -197,7 +197,7 @@ function require(module)
 				error(reason)
 			end
 		else
-			error("File opening failed: " .. tostring(reason))
+			error("Ошибка открытия файла: " .. tostring(reason))
 		end
 
 		package.loading[module] = nil
@@ -235,15 +235,15 @@ window:addChild(GUI.panel(1, 1, window.width, window.height, 0xE1E1E1))
 
 -- Top menu
 local menu = workspace:addChild(GUI.menu(1, 1, workspace.width, 0xF0F0F0, 0x787878, 0x3366CC, 0xE1E1E1))
-local installerMenu = menu:addContextMenuItem("MineOS", 0x2D2D2D)
-installerMenu:addItem("Shutdown").onTouch = function()
+local installerMenu = menu:addContextMenuItem("MineOЭС", 0x2D2D2D)
+installerMenu:addItem("Выключение").onTouch = function()
 	computer.shutdown()
 end
-installerMenu:addItem("Reboot").onTouch = function()
+installerMenu:addItem("Перезагрузка в bootloader").onTouch = function()
 	computer.shutdown(true)
 end
 installerMenu:addSeparator()
-installerMenu:addItem("Exit").onTouch = function()
+installerMenu:addItem("Выход с рекавери").onTouch = function()
 	workspace:stop()
 end
 
@@ -541,7 +541,7 @@ addStage(function()
 
 	-- Renaming if possible
 	if not selectedFilesystemProxy.getLabel() then
-		selectedFilesystemProxy.setLabel("MineOS HDD")
+		selectedFilesystemProxy.setLabel("Системный диск")
 	end
 
 	local function switchProxy(runnable)
@@ -570,7 +570,7 @@ addStage(function()
 	workspace:draw()
 	
 	EEPROMProxy.set(request(EFIURL))
-	EEPROMProxy.setLabel("MineOS EFI")
+	EEPROMProxy.setLabel("EFI МайнОЭС")
 	EEPROMProxy.setData(selectedFilesystemProxy.address)
 
 	-- Downloading files
