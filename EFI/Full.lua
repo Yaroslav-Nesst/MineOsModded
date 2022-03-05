@@ -82,7 +82,7 @@ local boot, menuBack, menu, input =
 	function(proxy)
 		for i = 1, #OSList do
 			if proxy.exists(OSList[i][1]) then
-				status(stringsMain, "Booting from " .. (proxy.getLabel() or proxy.address))
+				status(stringsMain, "Загрузочный сектор не может найти систему, запуск с " .. (proxy.getLabel() or proxy.address))
 
 				-- Updating current EEPROM boot address if it's differs from given proxy address
 				if eepromGetData() ~= proxy.address then
@@ -184,14 +184,14 @@ local boot, menuBack, menu, input =
 		end
 	end
 
-status(stringsMain, "mIne Os. Modded by 1arnom. Нажми ALT для настроек биоса")
+status(stringsMain, "Зажми ALT для входа в рекавери")
 
 local deadline, eventData = uptime() + 1
 while uptime() < deadline do
 	eventData = {pullSignal(deadline - uptime())}
 	if eventData[1] == stringKeyDown and eventData[4] == 56 then
 		local utilities = {
-			menuElement("Управление дисками", function()
+			menuElement("Менеджер дисков", function()
 				local restrict, filesystems, filesystemOptions =
 					function(text, limit)
 						if #text < limit then
@@ -212,10 +212,10 @@ while uptime() < deadline do
 					for address in componentList(stringsFilesystem) do
 						local proxy = componentProxy(address)
 						local label, isReadOnly, filesystemOptions =
-							proxy.getLabel() or "Безымённый",
+							proxy.getLabel() or "безматерный",
 							proxy.isReadOnly(),
 							{
-								menuElement("Установить как основной", function()
+								menuElement("сделать загрузочным", function()
 									eepromSetData(address)
 									updateFilesystems()
 								end, 1)
@@ -223,12 +223,12 @@ while uptime() < deadline do
 
 						if not isReadOnly then
 							tableInsert(filesystemOptions, menuElement(stringsChangeLabel, function()
-								proxy.setLabel(input(title(2, stringsChangeLabel), "Установить новое имя: "))
+								proxy.setLabel(input(title(2, stringsChangeLabel), "Новое имя: "))
 								updateFilesystems()
 							end, 1))
 
-							tableInsert(filesystemOptions, menuElement("Форматировать", function()
-								status(stringsMain, "Форматирование фаловой системы " .. address)
+							tableInsert(filesystemOptions, menuElement("Format", function()
+								status(stringsMain, "Форматирование даты " .. address)
 								
 								for _, file in ipairs(proxy.list("/")) do
 									proxy.remove(file)
@@ -257,10 +257,10 @@ while uptime() < deadline do
 				end
 
 				updateFilesystems()
-				menu("Выберите файловую систему", filesystems)
+				menu("Select filesystem", filesystems)
 			end),
 			
-			menuElement("Вырубить", function()
+			menuElement("Выход из рекавери", function()
 				shutdown()
 			end),
 
@@ -268,11 +268,11 @@ while uptime() < deadline do
 		}
 
 		if internetAddress then	
-			tableInsert(utilities, 2, menuElement("Восстановление через интернет", function()
+			tableInsert(utilities, 2, menuElement("Адб сайдлоад с интернета", function()
 				local handle, data, result, reason = componentProxy(internetAddress).request("https://raw.githubusercontent.com/Yaroslav-Nesst/MineOsModded/master/Installer/Main.lua"), ""
 
 				if handle then
-					status(stringsMain, "Скачивание скрипта...")
+					status(stringsMain, "Идёт прошив через адб сайдлоад")
 
 					while 1 do
 						result, reason = handle.read(mathHuge)	
@@ -292,7 +292,7 @@ while uptime() < deadline do
 						end
 					end
 				else
-					status(stringsMain, "Неправильный URl адресс", 1)
+					status(stringsMain, "Ссылка инвалид", 1)
 				end
 			end))
 		end
@@ -314,7 +314,7 @@ if not (proxy and boot(proxy)) then
 	end
 
 	if not proxy then
-		status(stringsMain, "Нет дисков для запуска системы!", 1)
+		status(stringsMain, "Проебал диск, лох!", 1)
 	end
 end
 
